@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_spellcheck" default="compile.module.spellcheck">
+  <dirname property="module.spellcheck.basedir" file="${ant.file.module_spellcheck}"/>
+  
+  <property name="module.jdk.home.spellcheck" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.spellcheck" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.spellcheck" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.spellcheck" value="-encoding UTF-8 -source 1.6 -target 1.6 ${compiler.args}"/>
+  
+  <property name="spellcheck.output.dir" value="${module.spellcheck.basedir}/target/classes"/>
+  <property name="spellcheck.testoutput.dir" value="${module.spellcheck.basedir}/target/test-classes"/>
+  
+  <path id="spellcheck.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="spellcheck.module.production.classpath">
+    <path refid="${module.jdk.classpath.spellcheck}"/>
+    <path refid="library.maven:_com.googlecode.efficient-java-matrix-library:ejml:0.23.classpath"/>
+    <path refid="library.maven:_org.slf4j:slf4j-api:1.7.12.classpath"/>
+    <path refid="library.maven:_org.elasticsearch:elasticsearch:0.18.7.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-highlighter:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-memory:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-core:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-queries:3.5.0.classpath"/>
+    <path refid="library.maven:_jakarta-regexp:jakarta-regexp:1.4.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-analyzers:3.5.0.classpath"/>
+    <path refid="library.maven:_org.languagetool:language-en:4.4.classpath"/>
+    <path refid="library.maven:_org.languagetool:languagetool-core:4.4.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-lang3:3.5.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:21.0.classpath"/>
+    <path refid="library.maven:_net.java.dev.jna:jna:4.4.0.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-fsa:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-fsa-builders:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-speller:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-stemming:2.1.5.classpath"/>
+    <path refid="library.maven:_com.carrotsearch:hppc:0.7.2.classpath"/>
+    <path refid="library.maven:_net.loomchild:segment:2.0.0.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.1.1.classpath"/>
+    <path refid="library.maven:_com.optimaize.languagedetector:language-detector:0.6.classpath"/>
+    <path refid="library.maven:_net.arnx:jsonic:1.2.11.classpath"/>
+    <path refid="library.maven:_com.intellij:annotations:12.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-backward-codecs:5.5.4.classpath"/>
+    <path refid="library.maven:_edu.berkeley.nlp:berkeleylm:1.1.2.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.9.4.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.9.0.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.9.4.classpath"/>
+    <path refid="library.maven:_javax.measure:unit-api:1.0.classpath"/>
+    <path refid="library.maven:_tech.units:indriya:1.2.classpath"/>
+    <path refid="library.maven:_tech.uom.lib:uom-lib-common:1.1.classpath"/>
+    <path refid="library.maven:_javax.xml.bind:jaxb-api:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:jaxb-runtime:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:jaxb-core:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:txw2:2.3.0.classpath"/>
+    <path refid="library.maven:_com.sun.istack:istack-commons-runtime:3.0.5.classpath"/>
+    <path refid="library.maven:_org.jvnet.staxex:stax-ex:1.7.8.classpath"/>
+    <path refid="library.maven:_com.sun.xml.fastinfoset:fastinfoset:1.2.13.classpath"/>
+    <path refid="library.maven:_javax.activation:javax.activation-api:1.2.0.classpath"/>
+    <path refid="library.maven:_biz.k11i:xgboost-predictor:0.3.0.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-csv:1.6.classpath"/>
+    <path refid="library.maven:_org.apache.opennlp:opennlp-tools:1.7.2.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-tokenize-models:1.5.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-postag-models:1.5.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-chunk-models:1.5.classpath"/>
+  </path>
+  
+  <path id="spellcheck.runtime.production.module.classpath">
+    <pathelement location="${spellcheck.output.dir}"/>
+    <path refid="library.maven:_com.googlecode.efficient-java-matrix-library:ejml:0.23.classpath"/>
+    <path refid="library.maven:_org.slf4j:slf4j-api:1.7.12.classpath"/>
+    <path refid="library.maven:_org.elasticsearch:elasticsearch:0.18.7.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-highlighter:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-memory:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-core:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-queries:3.5.0.classpath"/>
+    <path refid="library.maven:_jakarta-regexp:jakarta-regexp:1.4.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-analyzers:3.5.0.classpath"/>
+    <path refid="library.maven:_log4j:log4j:1.2.16.classpath"/>
+    <path refid="library.maven:_org.languagetool:language-en:4.4.classpath"/>
+    <path refid="library.maven:_org.languagetool:languagetool-core:4.4.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-lang3:3.5.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:21.0.classpath"/>
+    <path refid="library.maven:_net.java.dev.jna:jna:4.4.0.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-fsa:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-fsa-builders:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-speller:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-stemming:2.1.5.classpath"/>
+    <path refid="library.maven:_com.carrotsearch:hppc:0.7.2.classpath"/>
+    <path refid="library.maven:_net.loomchild:segment:2.0.0.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.1.1.classpath"/>
+    <path refid="library.maven:_com.optimaize.languagedetector:language-detector:0.6.classpath"/>
+    <path refid="library.maven:_net.arnx:jsonic:1.2.11.classpath"/>
+    <path refid="library.maven:_com.intellij:annotations:12.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-backward-codecs:5.5.4.classpath"/>
+    <path refid="library.maven:_edu.berkeley.nlp:berkeleylm:1.1.2.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.9.4.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.9.0.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.9.4.classpath"/>
+    <path refid="library.maven:_javax.measure:unit-api:1.0.classpath"/>
+    <path refid="library.maven:_tech.units:indriya:1.2.classpath"/>
+    <path refid="library.maven:_tech.uom.lib:uom-lib-common:1.1.classpath"/>
+    <path refid="library.maven:_javax.xml.bind:jaxb-api:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:jaxb-runtime:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:jaxb-core:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:txw2:2.3.0.classpath"/>
+    <path refid="library.maven:_com.sun.istack:istack-commons-runtime:3.0.5.classpath"/>
+    <path refid="library.maven:_org.jvnet.staxex:stax-ex:1.7.8.classpath"/>
+    <path refid="library.maven:_com.sun.xml.fastinfoset:fastinfoset:1.2.13.classpath"/>
+    <path refid="library.maven:_javax.activation:javax.activation-api:1.2.0.classpath"/>
+    <path refid="library.maven:_biz.k11i:xgboost-predictor:0.3.0.classpath"/>
+    <path refid="library.maven:_net.jafama:jafama:2.1.0.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-csv:1.6.classpath"/>
+    <path refid="library.maven:_org.apache.opennlp:opennlp-tools:1.7.2.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-tokenize-models:1.5.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-postag-models:1.5.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-chunk-models:1.5.classpath"/>
+  </path>
+  
+  <path id="spellcheck.module.classpath">
+    <path refid="${module.jdk.classpath.spellcheck}"/>
+    <pathelement location="${spellcheck.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.11.classpath"/>
+    <path refid="library.maven:_com.googlecode.efficient-java-matrix-library:ejml:0.23.classpath"/>
+    <path refid="library.maven:_org.slf4j:slf4j-api:1.7.12.classpath"/>
+    <path refid="library.maven:_org.elasticsearch:elasticsearch:0.18.7.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-highlighter:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-memory:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-core:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-queries:3.5.0.classpath"/>
+    <path refid="library.maven:_jakarta-regexp:jakarta-regexp:1.4.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-analyzers:3.5.0.classpath"/>
+    <path refid="library.maven:_log4j:log4j:1.2.16.classpath"/>
+    <path refid="library.maven:_org.testng:testng:6.3.1.classpath"/>
+    <path refid="library.maven:_org.beanshell:bsh:2.0b4.classpath"/>
+    <path refid="library.maven:_com.beust:jcommander:1.12.classpath"/>
+    <path refid="library.maven:_org.yaml:snakeyaml:1.6.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.rc2.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-library:1.3.rc2.classpath"/>
+    <path refid="library.maven:_org.languagetool:language-en:4.4.classpath"/>
+    <path refid="library.maven:_org.languagetool:languagetool-core:4.4.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-lang3:3.5.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:21.0.classpath"/>
+    <path refid="library.maven:_net.java.dev.jna:jna:4.4.0.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-fsa:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-fsa-builders:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-speller:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-stemming:2.1.5.classpath"/>
+    <path refid="library.maven:_com.carrotsearch:hppc:0.7.2.classpath"/>
+    <path refid="library.maven:_net.loomchild:segment:2.0.0.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.1.1.classpath"/>
+    <path refid="library.maven:_com.optimaize.languagedetector:language-detector:0.6.classpath"/>
+    <path refid="library.maven:_net.arnx:jsonic:1.2.11.classpath"/>
+    <path refid="library.maven:_com.intellij:annotations:12.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-backward-codecs:5.5.4.classpath"/>
+    <path refid="library.maven:_edu.berkeley.nlp:berkeleylm:1.1.2.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.9.4.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.9.0.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.9.4.classpath"/>
+    <path refid="library.maven:_javax.measure:unit-api:1.0.classpath"/>
+    <path refid="library.maven:_tech.units:indriya:1.2.classpath"/>
+    <path refid="library.maven:_tech.uom.lib:uom-lib-common:1.1.classpath"/>
+    <path refid="library.maven:_javax.xml.bind:jaxb-api:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:jaxb-runtime:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:jaxb-core:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:txw2:2.3.0.classpath"/>
+    <path refid="library.maven:_com.sun.istack:istack-commons-runtime:3.0.5.classpath"/>
+    <path refid="library.maven:_org.jvnet.staxex:stax-ex:1.7.8.classpath"/>
+    <path refid="library.maven:_com.sun.xml.fastinfoset:fastinfoset:1.2.13.classpath"/>
+    <path refid="library.maven:_javax.activation:javax.activation-api:1.2.0.classpath"/>
+    <path refid="library.maven:_biz.k11i:xgboost-predictor:0.3.0.classpath"/>
+    <path refid="library.maven:_net.jafama:jafama:2.1.0.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-csv:1.6.classpath"/>
+    <path refid="library.maven:_org.apache.opennlp:opennlp-tools:1.7.2.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-tokenize-models:1.5.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-postag-models:1.5.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-chunk-models:1.5.classpath"/>
+  </path>
+  
+  <path id="spellcheck.runtime.module.classpath">
+    <pathelement location="${spellcheck.testoutput.dir}"/>
+    <pathelement location="${spellcheck.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.11.classpath"/>
+    <path refid="library.maven:_com.googlecode.efficient-java-matrix-library:ejml:0.23.classpath"/>
+    <path refid="library.maven:_org.slf4j:slf4j-api:1.7.12.classpath"/>
+    <path refid="library.maven:_org.elasticsearch:elasticsearch:0.18.7.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-highlighter:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-memory:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-core:3.5.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-queries:3.5.0.classpath"/>
+    <path refid="library.maven:_jakarta-regexp:jakarta-regexp:1.4.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-analyzers:3.5.0.classpath"/>
+    <path refid="library.maven:_log4j:log4j:1.2.16.classpath"/>
+    <path refid="library.maven:_org.testng:testng:6.3.1.classpath"/>
+    <path refid="library.maven:_org.beanshell:bsh:2.0b4.classpath"/>
+    <path refid="library.maven:_com.beust:jcommander:1.12.classpath"/>
+    <path refid="library.maven:_org.yaml:snakeyaml:1.6.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.rc2.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-library:1.3.rc2.classpath"/>
+    <path refid="library.maven:_org.languagetool:language-en:4.4.classpath"/>
+    <path refid="library.maven:_org.languagetool:languagetool-core:4.4.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-lang3:3.5.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:21.0.classpath"/>
+    <path refid="library.maven:_net.java.dev.jna:jna:4.4.0.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-fsa:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-fsa-builders:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-speller:2.1.5.classpath"/>
+    <path refid="library.maven:_org.carrot2:morfologik-stemming:2.1.5.classpath"/>
+    <path refid="library.maven:_com.carrotsearch:hppc:0.7.2.classpath"/>
+    <path refid="library.maven:_net.loomchild:segment:2.0.0.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.1.1.classpath"/>
+    <path refid="library.maven:_com.optimaize.languagedetector:language-detector:0.6.classpath"/>
+    <path refid="library.maven:_net.arnx:jsonic:1.2.11.classpath"/>
+    <path refid="library.maven:_com.intellij:annotations:12.0.classpath"/>
+    <path refid="library.maven:_org.apache.lucene:lucene-backward-codecs:5.5.4.classpath"/>
+    <path refid="library.maven:_edu.berkeley.nlp:berkeleylm:1.1.2.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.9.4.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.9.0.classpath"/>
+    <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.9.4.classpath"/>
+    <path refid="library.maven:_javax.measure:unit-api:1.0.classpath"/>
+    <path refid="library.maven:_tech.units:indriya:1.2.classpath"/>
+    <path refid="library.maven:_tech.uom.lib:uom-lib-common:1.1.classpath"/>
+    <path refid="library.maven:_javax.xml.bind:jaxb-api:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:jaxb-runtime:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:jaxb-core:2.3.0.classpath"/>
+    <path refid="library.maven:_org.glassfish.jaxb:txw2:2.3.0.classpath"/>
+    <path refid="library.maven:_com.sun.istack:istack-commons-runtime:3.0.5.classpath"/>
+    <path refid="library.maven:_org.jvnet.staxex:stax-ex:1.7.8.classpath"/>
+    <path refid="library.maven:_com.sun.xml.fastinfoset:fastinfoset:1.2.13.classpath"/>
+    <path refid="library.maven:_javax.activation:javax.activation-api:1.2.0.classpath"/>
+    <path refid="library.maven:_biz.k11i:xgboost-predictor:0.3.0.classpath"/>
+    <path refid="library.maven:_net.jafama:jafama:2.1.0.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-csv:1.6.classpath"/>
+    <path refid="library.maven:_org.apache.opennlp:opennlp-tools:1.7.2.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-tokenize-models:1.5.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-postag-models:1.5.classpath"/>
+    <path refid="library.maven:_edu.washington.cs.knowitall:opennlp-chunk-models:1.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.spellcheck">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.spellcheck">
+    <patternset refid="excluded.from.module.spellcheck"/>
+  </patternset>
+  
+  <path id="spellcheck.module.sourcepath">
+    <dirset dir="${module.spellcheck.basedir}">
+      <include name="src/main/java"/>
+    </dirset>
+  </path>
+  
+  <path id="spellcheck.module.test.sourcepath">
+    <dirset dir="${module.spellcheck.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.spellcheck" depends="compile.module.spellcheck.production,compile.module.spellcheck.tests" description="Compile module Spellcheck"/>
+  
+  <target name="compile.module.spellcheck.production" depends="register.custom.compilers" description="Compile module Spellcheck; production classes">
+    <mkdir dir="${spellcheck.output.dir}"/>
+    <javac2 destdir="${spellcheck.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.spellcheck}/javac">
+      <compilerarg line="${compiler.args.spellcheck}"/>
+      <bootclasspath refid="spellcheck.module.bootclasspath"/>
+      <classpath refid="spellcheck.module.production.classpath"/>
+      <src refid="spellcheck.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.spellcheck"/>
+    </javac2>
+    
+    <copy todir="${spellcheck.output.dir}">
+      <fileset dir="${module.spellcheck.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.spellcheck.tests" depends="register.custom.compilers,compile.module.spellcheck.production" description="compile module Spellcheck; test classes" unless="skip.tests">
+    <mkdir dir="${spellcheck.testoutput.dir}"/>
+    <javac2 destdir="${spellcheck.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.spellcheck}/javac">
+      <compilerarg line="${compiler.args.spellcheck}"/>
+      <bootclasspath refid="spellcheck.module.bootclasspath"/>
+      <classpath refid="spellcheck.module.classpath"/>
+      <src refid="spellcheck.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.spellcheck"/>
+    </javac2>
+    
+    <copy todir="${spellcheck.testoutput.dir}">
+      <fileset dir="${module.spellcheck.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.spellcheck" description="cleanup module">
+    <delete dir="${spellcheck.output.dir}"/>
+    <delete dir="${spellcheck.testoutput.dir}"/>
+  </target>
+</project>

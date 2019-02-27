@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="spellcheck" default="all">
+  
+  
+  <property file="spellcheck.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.war"/>
+    <include name="*.ane"/>
+    <include name="*.zip"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="lib/ant-javafx.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javafx-mx.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/packager.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="lib/tools.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.maven:_biz.k11i:xgboost-predictor:0.3.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/biz/k11i/xgboost-predictor/0.3.0/xgboost-predictor-0.3.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.beust:jcommander:1.12.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/beust/jcommander/1.12/jcommander-1.12.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.carrotsearch:hppc:0.7.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/carrotsearch/hppc/0.7.2/hppc-0.7.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.9.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/fasterxml/jackson/core/jackson-annotations/2.9.0/jackson-annotations-2.9.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.fasterxml.jackson.core:jackson-core:2.9.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/fasterxml/jackson/core/jackson-core/2.9.4/jackson-core-2.9.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.9.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/fasterxml/jackson/core/jackson-databind/2.9.4/jackson-databind-2.9.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.github.lucene-gosen:lucene-gosen:ipadic:6.2.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/github/lucene-gosen/lucene-gosen/6.2.1/lucene-gosen-6.2.1-ipadic.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.google.code:cjftransform:1.0.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/code/cjftransform/1.0.1/cjftransform-1.0.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.google.guava:guava:21.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/guava/guava/21.0/guava-21.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.googlecode.efficient-java-matrix-library:ejml:0.23.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/googlecode/efficient-java-matrix-library/ejml/0.23/ejml-0.23.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.googlecode.ictclas4j:ictclas4j:1.0.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/googlecode/ictclas4j/ictclas4j/1.0.1/ictclas4j-1.0.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.hankcs:aho-corasick-double-array-trie:1.2.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/hankcs/aho-corasick-double-array-trie/1.2.0/aho-corasick-double-array-trie-1.2.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.ibm.icu:icu4j:56.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/ibm/icu/icu4j/56.1/icu4j-56.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.intellij:annotations:12.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/intellij/annotations/12.0/annotations-12.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.optimaize.languagedetector:language-detector:0.6.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/optimaize/languagedetector/language-detector/0.6/language-detector-0.6.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.sun.istack:istack-commons-runtime:3.0.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/sun/istack/istack-commons-runtime/3.0.5/istack-commons-runtime-3.0.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.sun.xml.fastinfoset:fastinfoset:1.2.13.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/sun/xml/fastinfoset/FastInfoset/1.2.13/FastInfoset-1.2.13.jar"/>
+  </path>
+  
+  <path id="library.maven:_commons-lang:commons-lang:2.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/commons-lang/commons-lang/2.4/commons-lang-2.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_commons-logging:commons-logging:1.1.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_de.danielnaber:german-pos-dict:1.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/de/danielnaber/german-pos-dict/1.1/german-pos-dict-1.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_de.danielnaber:jwordsplitter:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/de/danielnaber/jwordsplitter/4.4/jwordsplitter-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_edu.berkeley.nlp:berkeleylm:1.1.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/edu/berkeley/nlp/berkeleylm/1.1.2/berkeleylm-1.1.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_edu.washington.cs.knowitall:opennlp-chunk-models:1.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/edu/washington/cs/knowitall/opennlp-chunk-models/1.5/opennlp-chunk-models-1.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_edu.washington.cs.knowitall:opennlp-postag-models:1.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/edu/washington/cs/knowitall/opennlp-postag-models/1.5/opennlp-postag-models-1.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_edu.washington.cs.knowitall:opennlp-tokenize-models:1.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/edu/washington/cs/knowitall/opennlp-tokenize-models/1.5/opennlp-tokenize-models-1.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_edu.washington.cs.knowitall:openregex:1.1.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/edu/washington/cs/knowitall/openregex/1.1.1/openregex-1.1.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_jakarta-regexp:jakarta-regexp:1.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_javax.activation:javax.activation-api:1.2.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_javax.measure:unit-api:1.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/javax/measure/unit-api/1.0/unit-api-1.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_javax.xml.bind:jaxb-api:2.3.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/javax/xml/bind/jaxb-api/2.3.0/jaxb-api-2.3.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_junit:junit:4.11.classpath">
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.11/junit-4.11.jar"/>
+  </path>
+  
+  <path id="library.maven:_log4j:log4j:1.2.16.classpath">
+    <pathelement location="${path.variable.maven_repository}/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
+  </path>
+  
+  <path id="library.maven:_net.arnx:jsonic:1.2.11.classpath">
+    <pathelement location="${path.variable.maven_repository}/net/arnx/jsonic/1.2.11/jsonic-1.2.11.jar"/>
+  </path>
+  
+  <path id="library.maven:_net.jafama:jafama:2.1.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/net/jafama/jafama/2.1.0/jafama-2.1.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_net.java.dev.jna:jna:4.4.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/net/java/dev/jna/jna/4.4.0/jna-4.4.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_net.loomchild:segment:2.0.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/net/loomchild/segment/2.0.0/segment-2.0.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.commons:commons-csv:1.6.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/commons/commons-csv/1.6/commons-csv-1.6.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.commons:commons-lang3:3.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.lucene:lucene-analyzers:3.5.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/lucene/lucene-analyzers/3.5.0/lucene-analyzers-3.5.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.lucene:lucene-backward-codecs:5.5.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/lucene/lucene-backward-codecs/5.5.4/lucene-backward-codecs-5.5.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.lucene:lucene-core:3.5.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/lucene/lucene-core/3.5.0/lucene-core-3.5.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.lucene:lucene-highlighter:3.5.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/lucene/lucene-highlighter/3.5.0/lucene-highlighter-3.5.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.lucene:lucene-memory:3.5.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/lucene/lucene-memory/3.5.0/lucene-memory-3.5.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.lucene:lucene-queries:3.5.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/lucene/lucene-queries/3.5.0/lucene-queries-3.5.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.opennlp:opennlp-tools:1.7.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/opennlp/opennlp-tools/1.7.2/opennlp-tools-1.7.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.beanshell:bsh:2.0b4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.carrot2:morfologik-fsa-builders:2.1.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/carrot2/morfologik-fsa-builders/2.1.5/morfologik-fsa-builders-2.1.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.carrot2:morfologik-fsa:2.1.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/carrot2/morfologik-fsa/2.1.5/morfologik-fsa-2.1.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.carrot2:morfologik-speller:2.1.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/carrot2/morfologik-speller/2.1.5/morfologik-speller-2.1.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.carrot2:morfologik-stemming:2.1.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/carrot2/morfologik-stemming/2.1.5/morfologik-stemming-2.1.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.elasticsearch:elasticsearch:0.18.7.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/elasticsearch/elasticsearch/0.18.7/elasticsearch-0.18.7.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.glassfish.jaxb:jaxb-core:2.3.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/glassfish/jaxb/jaxb-core/2.3.0/jaxb-core-2.3.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.glassfish.jaxb:jaxb-runtime:2.3.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/glassfish/jaxb/jaxb-runtime/2.3.0/jaxb-runtime-2.3.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.glassfish.jaxb:txw2:2.3.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/glassfish/jaxb/txw2/2.3.0/txw2-2.3.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.hamcrest:hamcrest-core:1.3.rc2.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3.RC2/hamcrest-core-1.3.RC2.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.hamcrest:hamcrest-library:1.3.rc2.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-library/1.3.RC2/hamcrest-library-1.3.RC2.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.ioperm:morphology-el:1.0.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/ioperm/morphology-el/1.0.0/morphology-el-1.0.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.jvnet.staxex:stax-ex:1.7.8.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/jvnet/staxex/stax-ex/1.7.8/stax-ex-1.7.8.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:hunspell-native-libs:2.9.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/hunspell-native-libs/2.9/hunspell-native-libs-2.9.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-all:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-all/4.4/language-all-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-ast:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-ast/4.4/language-ast-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-be:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-be/4.4/language-be-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-br:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-br/4.4/language-br-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-ca:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-ca/4.4/language-ca-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-da:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-da/4.4/language-da-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-de-de-x-simple-language:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-de-DE-x-simple-language/4.4/language-de-DE-x-simple-language-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-de:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-de/4.4/language-de-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-el:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-el/4.4/language-el-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-en:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-en/4.4/language-en-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-eo:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-eo/4.4/language-eo-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-es:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-es/4.4/language-es-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-fa:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-fa/4.4/language-fa-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-fr:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-fr/4.4/language-fr-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-gl:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-gl/4.4/language-gl-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-it:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-it/4.4/language-it-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-ja:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-ja/4.4/language-ja-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-km:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-km/4.4/language-km-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-nl:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-nl/4.4/language-nl-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-pl:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-pl/4.4/language-pl-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-pt:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-pt/4.4/language-pt-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-ro:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-ro/4.4/language-ro-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-ru:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-ru/4.4/language-ru-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-sk:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-sk/4.4/language-sk-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-sl:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-sl/4.4/language-sl-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-sv:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-sv/4.4/language-sv-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-ta:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-ta/4.4/language-ta-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-tl:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-tl/4.4/language-tl-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-uk:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-uk/4.4/language-uk-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:language-zh:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/language-zh/4.4/language-zh-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.languagetool:languagetool-core:4.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/languagetool/languagetool-core/4.4/languagetool-core-4.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.slf4j:slf4j-api:1.7.12.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/slf4j/slf4j-api/1.7.12/slf4j-api-1.7.12.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.softcatala:catalan-pos-dict:2.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/softcatala/catalan-pos-dict/2.2/catalan-pos-dict-2.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.testng:testng:6.3.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/testng/testng/6.3.1/testng-6.3.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.yaml:snakeyaml:1.6.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/yaml/snakeyaml/1.6/snakeyaml-1.6.jar"/>
+  </path>
+  
+  <path id="library.maven:_tech.units:indriya:1.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/tech/units/indriya/1.2/indriya-1.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_tech.uom.lib:uom-lib-common:1.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/tech/uom/lib/uom-lib-common/1.1/uom-lib-common-1.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_ua.net.nlp:morfologik-ukrainian-lt:4.3.9.classpath">
+    <pathelement location="${path.variable.maven_repository}/ua/net/nlp/morfologik-ukrainian-lt/4.3.9/morfologik-ukrainian-lt-4.3.9.jar"/>
+  </path>
+  
+  
+  <!-- Application Server Libraries -->
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  <import file="${basedir}/module_spellcheck.xml"/>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.spellcheck" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.spellcheck" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.spellcheck:jar" value="${basedir}/out/artifacts/Spellcheck_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.Spellcheck.jar" value="${artifacts.temp.dir}/Spellcheck.jar"/>
+  </target>
+  
+  <target name="artifact.spellcheck:jar" depends="init.artifacts, compile.module.spellcheck" description="Build &#39;Spellcheck:jar&#39; artifact">
+    <property name="artifact.temp.output.spellcheck:jar" value="${artifacts.temp.dir}/Spellcheck_jar"/>
+    <mkdir dir="${artifact.temp.output.spellcheck:jar}"/>
+    <jar destfile="${temp.jar.path.Spellcheck.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${spellcheck.output.dir}"/>
+      <zipfileset src="${path.variable.maven_repository}/org/apache/lucene/lucene-highlighter/3.5.0/lucene-highlighter-3.5.0.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/apache/lucene/lucene-memory/3.5.0/lucene-memory-3.5.0.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/com/googlecode/efficient-java-matrix-library/ejml/0.23/ejml-0.23.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/apache/lucene/lucene-analyzers/3.5.0/lucene-analyzers-3.5.0.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/elasticsearch/elasticsearch/0.18.7/elasticsearch-0.18.7.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/slf4j/slf4j-api/1.7.12/slf4j-api-1.7.12.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/apache/lucene/lucene-core/3.5.0/lucene-core-3.5.0.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/apache/lucene/lucene-queries/3.5.0/lucene-queries-3.5.0.jar"/>
+      <zipfileset file="${path.variable.maven_repository}/org/languagetool/language-en/4.4/language-en-4.4.jar"/>
+      <zipfileset file="${path.variable.maven_repository}/org/languagetool/languagetool-core/4.4/languagetool-core-4.4.jar"/>
+      <zipfileset file="${basedir}/../../Downloads/language-all-4.4.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.Spellcheck.jar}" tofile="${artifact.temp.output.spellcheck:jar}/Spellcheck.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.spellcheck:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.spellcheck:jar}"/>
+    <copy todir="${artifact.output.spellcheck:jar}">
+      <fileset dir="${artifact.temp.output.spellcheck:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
